@@ -38,7 +38,7 @@ editor: visual
 
 -   Correlated with El Nino Southern Oscillation (ENSO)
 
--   How does IMARPE handle the risk of ENSO?
+-   How does IMARPE handle the risk of ENSO? Quota determination protocols aren't clear
 
 ## Model setup
 
@@ -61,7 +61,7 @@ $$
 :::
 :::
 
-$G(b_t)$ is a function with estimatable biological parameters
+$G(b_t)$ is a function with estimable biological parameters
 
 ## Manager maximizes utility
 
@@ -91,7 +91,6 @@ U_t=&\frac{\pi_t(h_t,b_t)^{1-\gamma}}{1-\gamma}
 \end{aligned}
 $$
 
-
 ## Solve first order condition {.smaller}
 
 $$
@@ -108,9 +107,24 @@ There are 2 parameters to estimate: $\gamma$ and $c$
 
 $r$ and $k$ are known and can either be estimated or fixed from literature
 
-## Timing
-::: columns
+## Solve first order condition
 
+$$
+\begin{aligned} 
+E_t \left[\left(-(p-\frac{c}{b_t}\right) \left[\left(p-\frac{c}{b_{t}}\right)\left(h_t\right)\right]^{-\gamma} + \delta \left[\left(p-\frac{c}{b_{t+1}}\right)\left( h_{t+1}\right)\right]^{-\gamma}\frac{c}{b_{t+1}^{2}}\left[h_{t+2}\right]\left[\left(p-\frac{c}{b_{t+1}}\right)\left(1-\frac{r}{k}\right)\right]\right]=0
+\end{aligned}
+$$
+Replacing harvest definition and assuming $p_{t}$=$p_{t+1}$
+
+There are 2 parameters to estimate: $\gamma$ and $c$
+
+6 variables: $b_t$, $b_{t+1}$, $z_t$, $z_{t+1}$, $p_t$, $p_{t+1}$
+
+$r$ and $k$ are known and can either be estimated or fixed from literature
+
+## Timing
+
+::: columns
 ::: column
 1.  Fishery Managers observe $b_t$ through a stock assessment
 
@@ -119,41 +133,29 @@ $r$ and $k$ are known and can either be estimated or fixed from literature
 3.  They choose harvest (or Quota)
 
 4.  In the next period they have a perfect observation of $b_{t+1}$
-
 :::
 
 ::: column
-
-![Acoustic Survery transacts to esimtate biomass](img/acoustic.png){width=100%,height=100%}
-
-
+![Acoustic Survey transacts to estimate biomass](img/acoustic.png){width="100%,height=100%"}
 :::
-
 :::
 
 ## Data: IMARPE
 
 ::: columns
-
 ::: column
+-   **Central North**
 
-- **Central North**
+2006-2013 Inter-season biomass, quota, and landings
 
-2006-2013 Interseason biomass, quota, and landings
+-   **South Peru**
 
-- **South Peru**
-
-2009-2013 Interseason quota and landings
-
-
+2009-2013 Inter-season biomass, quota and landings
 :::
 
 ::: column
-
 ![](img/coast-split.png)
-
 :::
-
 :::
 
 ## Data: IMARPE
@@ -198,6 +200,3 @@ $$
 h=\frac{\partial U}{\partial b_{t+1}^*}+\delta\mathbb{E}\frac{\partial U_{t+1}}{\partial b_{t+1}^*} \\
 h=\frac{\partial \pi_t}{\partial b_{t+1}^*}\pi(b_t,b_{t+1},z_t)^{-\gamma}+\delta\mathbb{E}[\frac{\partial G}{\partial b_{t+1}}\frac{\partial\pi}{\partial b_{t+1}}\pi(b_{t+1},b_{t+2},z_{t+1})^{-\gamma}]
 $$
-
-
-
