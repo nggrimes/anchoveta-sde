@@ -95,32 +95,22 @@ $$
 
 $$
 \begin{aligned}
-h_t=&(\frac{c}{b_t}-p_t)(p_t(b_t+r(1-\frac{b_t}{k})-b_{t+1}+z_t)-c(\frac{b_t+r(1-\frac{b_t}{k})-b_{t+1}+z_t}{b_t}))^{-\gamma}\\
-&+\delta\mathbb{E}[(p_{t+1}(b_{t+1}-\frac{r}{k})+\frac{c(r-b_{t+2}+z_{t+1})}{x_{t+1}^2})\\
-&(p_{t+1}(b_{t+1}+r(1-\frac{b_{t+1}}{k})-b_{t+2}+z_{t+1})-c(\frac{b_{t+1}+r(1-\frac{b_{t+1}}{k})-b_{t+2}+z_{t+1}}{b_{t+1}}))^{-\gamma}]
+h_t=&(\frac{c}{b_t}-p_t)(p_th_t-c(\frac{h_t}{b_t}))^{-\gamma}\\
+&+\delta\mathbb{E}[(p_{t+1}(b_{t+1}-\frac{r}{k})+\frac{c(r-b_{t+2}+z_{t+1})}{x_{t+1}^2})(p_{t+1}h_{t+1}-c(\frac{h_{t+1}}{b_{t+1}}))^{-\gamma}]
 \end{aligned}
 $$
 
 There are 2 parameters to estimate: $\gamma$ and $c$
 
-6 variables: $b_t$, $b_{t+1}$, $z_t$, $z_{t+1}$, $p_t$, $p_{t+1}$
+8 variables: $b_t$, $b_{t+1}$, $z_t$, $z_{t+1}$, $p_t$, $p_{t+1}$, $h_t$, $h_{t+1}$
 
 $r$ and $k$ are known and can either be estimated or fixed from literature
 
-## Solve first order condition
+**Instruments:**
 
-$$
-\begin{aligned} 
-E_t \left[\left(-(p-\frac{c}{b_t}\right) \left[\left(p-\frac{c}{b_{t}}\right)\left(h_t\right)\right]^{-\gamma} + \delta \left[\left(p-\frac{c}{b_{t+1}}\right)\left( h_{t+1}\right)\right]^{-\gamma}\frac{c}{b_{t+1}^{2}}\left[h_{t+2}\right]\left[\left(p-\frac{c}{b_{t+1}}\right)\left(1-\frac{r}{k}\right)\right]\right]=0
-\end{aligned}
-$$
-Replacing harvest definition and assuming $p_{t}$=$p_{t+1}$
+$\omega_{it}=\{z_t,z_{t-1},z_{t-2},b_{t+1},b_t,b_{t-1},b_{t-2},p_t,p_{t-1},p_{t-2}\}$
 
-There are 2 parameters to estimate: $\gamma$ and $c$
 
-6 variables: $b_t$, $b_{t+1}$, $z_t$, $z_{t+1}$, $p_t$, $p_{t+1}$
-
-$r$ and $k$ are known and can either be estimated or fixed from literature
 
 ## Timing
 
@@ -170,7 +160,8 @@ landings<-read_csv(here::here("data","year_season_zone.csv"))|>
 bio<-readxl::read_excel(here::here("data","per_anchovy_stock_estimate.xlsx"))|> 
   mutate(chr_year=as.character(year)) |> 
   mutate(yr_season=paste(chr_year,season_num,sep="-")) |> 
-  select(-chr_year)
+  select(-chr_year) |> 
+  mutate(biomass=biomass*1000)
 
 quota<-readxl::read_excel(here::here("data","Temporadas pesqueras.xlsx"),sheet="clean")
 
@@ -181,6 +172,8 @@ full<-quota |>
   pivot_longer(cols=c("sum_landing","biomass","quota"),names_to="type",values_to="value")
 
 # make a bar graph of the landings and quota for each zone and yr_season
+
+text_s<-18
 full |> 
   filter(zone=="CN" & type != "biomass") |> 
   ggplot(aes(x=yr_season,y=value,fill=type))+
@@ -189,14 +182,64 @@ full |>
   theme(axis.text.x = element_text(angle = 90, hjust = 1))+
   scale_fill_manual(values=c("#003660","#FEBC11"),name="",labels=c("Quota","Landings"))+
   labs(x="Year-Season",y="Metric Tons",title="Landings and Quota for the Central North zone")+
-  theme(axis.title=element_text(size=12),axis.text=element_text(size=10),legend.text=element_text(size=10),legend.title=element_text(size=12))
+  theme(axis.title=element_text(size=text_s+2),axis.text=element_text(size=text_s),legend.text=element_text(size=text_s+2),legend.title=element_text(size=text_s+4),plot.title=element_text(size=text_s+4))
 
 
 ```
 
+## Environmental Data {.scrollable}
+
+```{r}
+library(knitr)
+load(here::here("data","enso_pdo.rda"))
+
+enso_season<-enso |> 
+  filter(year %in% seq(2006,2014)) |> 
+  mutate(month_nm=match(month,month.abb)) |> 
+  mutate(season_nm=ifelse(month_nm<6,1,2)) |> 
+  group_by(season_nm,year) |> 
+  summarize(enso=mean(enso),.groups="drop") |>
+  mutate(chr_year=as.character(year)) |> 
+  mutate(yr_season=paste(chr_year,season_nm,sep="-"))
+
+full |> 
+  left_join(enso_season,by="yr_season") |> 
+  select(yr_season,zone,type,value,enso) |> 
+  kable()
+
+```
+
+
 ## Extra Slides
+
 
 $$
 h=\frac{\partial U}{\partial b_{t+1}^*}+\delta\mathbb{E}\frac{\partial U_{t+1}}{\partial b_{t+1}^*} \\
 h=\frac{\partial \pi_t}{\partial b_{t+1}^*}\pi(b_t,b_{t+1},z_t)^{-\gamma}+\delta\mathbb{E}[\frac{\partial G}{\partial b_{t+1}}\frac{\partial\pi}{\partial b_{t+1}}\pi(b_{t+1},b_{t+2},z_{t+1})^{-\gamma}]
+$$
+
+## Solve first order condition {.smaller}
+
+$$
+\begin{aligned} 
+E_t \left[\left(-(p-\frac{c}{b_t}\right) \left[\left(p-\frac{c}{b_{t}}\right)\left(h_t\right)\right]^{-\gamma} + \delta \left[\left(p-\frac{c}{b_{t+1}}\right)\left( h_{t+1}\right)\right]^{-\gamma}\frac{c}{b_{t+1}^{2}}\left[h_{t+2}\right]\left[\left(p-\frac{c}{b_{t+1}}\right)\left(1-\frac{r}{k}\right)\right]\right]=0
+\end{aligned}
+$$
+
+Replacing harvest definition and assuming $p_{t}$=$p_{t+1}$
+
+There are 2 parameters to estimate: $\gamma$ and $c$
+
+6 variables: $b_t$, $b_{t+1}$, $z_t$, $z_{t+1}$, $p_t$, $p_{t+1}$
+
+$r$ and $k$ are known and can either be estimated or fixed from literature
+
+## Extra:
+
+$$
+\begin{aligned}
+h_t=&(\frac{c}{b_t}-p_t)(p_t(b_t+r(1-\frac{b_t}{k})-b_{t+1}+z_t)-c(\frac{b_t+r(1-\frac{b_t}{k})-b_{t+1}+z_t}{b_t}))^{-\gamma}\\
+&+\delta\mathbb{E}[(p_{t+1}(b_{t+1}-\frac{r}{k})+\frac{c(r-b_{t+2}+z_{t+1})}{x_{t+1}^2})\\
+&(p_{t+1}(b_{t+1}+r(1-\frac{b_{t+1}}{k})-b_{t+2}+z_{t+1})-c(\frac{b_{t+1}+r(1-\frac{b_{t+1}}{k})-b_{t+2}+z_{t+1}}{b_{t+1}}))^{-\gamma}]
+\end{aligned}
 $$

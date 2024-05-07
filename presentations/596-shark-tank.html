@@ -12,7 +12,7 @@
 
   <meta name="author" content="Nathaniel Grimes">
   <meta name="author" content="Mauricio Collado">
-  <meta name="dcterms.date" content="2024-05-06">
+  <meta name="dcterms.date" content="2024-05-07">
   <title>Dynamic Estimation of Peruvian Anchoveta Managers Preferences</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -351,7 +351,7 @@ Mauricio Collado
     </div>
 </div>
 
-  <p class="date">2024-05-06</p>
+  <p class="date">2024-05-07</p>
 </section>
 <section id="background" class="slide level2">
 <h2>Background</h2>
@@ -371,7 +371,7 @@ Mauricio Collado
 <ul>
 <li><p>The biggest one-species fishery</p></li>
 <li><p>Correlated with El Nino Southern Oscillation (ENSO)</p></li>
-<li><p>How does IMARPE handle the risk of ENSO?</p></li>
+<li><p>How does IMARPE handle the risk of ENSO? Quota determination protocols aren’t clear</p></li>
 </ul>
 </section>
 <section id="model-setup" class="slide level2">
@@ -394,7 +394,7 @@ b_{t+1} = b_t+r(1-\frac{b_t}{k})-h_t+z_t
 </ul>
 </div>
 </div>
-<p><span class="math inline">\(G(b_t)\)</span> is a function with estimatable biological parameters</p>
+<p><span class="math inline">\(G(b_t)\)</span> is a function with estimable biological parameters</p>
 </section>
 <section id="manager-maximizes-utility" class="slide level2">
 <h2>Manager maximizes utility</h2>
@@ -424,14 +424,15 @@ U_t=&amp;\frac{\pi_t(h_t,b_t)^{1-\gamma}}{1-\gamma}
 <h2>Solve first order condition</h2>
 <p><span class="math display">\[
 \begin{aligned}
-h_t=&amp;(\frac{c}{b_t}-p_t)(p_t(b_t+r(1-\frac{b_t}{k})-b_{t+1}+z_t)-c(\frac{b_t+r(1-\frac{b_t}{k})-b_{t+1}+z_t}{b_t}))^{-\gamma}\\
-&amp;+\delta\mathbb{E}[(p_{t+1}(b_{t+1}-\frac{r}{k})+\frac{c(r-b_{t+2}+z_{t+1})}{x_{t+1}^2})\\
-&amp;(p_{t+1}(b_{t+1}+r(1-\frac{b_{t+1}}{k})-b_{t+2}+z_{t+1})-c(\frac{b_{t+1}+r(1-\frac{b_{t+1}}{k})-b_{t+2}+z_{t+1}}{b_{t+1}}))^{-\gamma}]
+h_t=&amp;(\frac{c}{b_t}-p_t)(p_th_t-c(\frac{h_t}{b_t}))^{-\gamma}\\
+&amp;+\delta\mathbb{E}[(p_{t+1}(b_{t+1}-\frac{r}{k})+\frac{c(r-b_{t+2}+z_{t+1})}{x_{t+1}^2})(p_{t+1}h_{t+1}-c(\frac{h_{t+1}}{b_{t+1}}))^{-\gamma}]
 \end{aligned}
 \]</span></p>
 <p>There are 2 parameters to estimate: <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(c\)</span></p>
-<p>6 variables: <span class="math inline">\(b_t\)</span>, <span class="math inline">\(b_{t+1}\)</span>, <span class="math inline">\(z_t\)</span>, <span class="math inline">\(z_{t+1}\)</span>, <span class="math inline">\(p_t\)</span>, <span class="math inline">\(p_{t+1}\)</span></p>
+<p>8 variables: <span class="math inline">\(b_t\)</span>, <span class="math inline">\(b_{t+1}\)</span>, <span class="math inline">\(z_t\)</span>, <span class="math inline">\(z_{t+1}\)</span>, <span class="math inline">\(p_t\)</span>, <span class="math inline">\(p_{t+1}\)</span>, <span class="math inline">\(h_t\)</span>, <span class="math inline">\(h_{t+1}\)</span></p>
 <p><span class="math inline">\(r\)</span> and <span class="math inline">\(k\)</span> are known and can either be estimated or fixed from literature</p>
+<p><strong>Instruments:</strong></p>
+<p><span class="math inline">\(\omega_{it}=\{z_t,z_{t-1},z_{t-2},b_{t+1},b_t,b_{t-1},b_{t-2},p_t,p_{t-1},p_{t-2}\}\)</span></p>
 </section>
 <section id="timing" class="slide level2">
 <h2>Timing</h2>
@@ -447,7 +448,7 @@ h_t=&amp;(\frac{c}{b_t}-p_t)(p_t(b_t+r(1-\frac{b_t}{k})-b_{t+1}+z_t)-c(\frac{b_t
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/acoustic.png"></p>
-<figcaption>Acoustic Survery transacts to esimtate biomass</figcaption>
+<figcaption>Acoustic Survey transacts to estimate biomass</figcaption>
 </figure>
 </div>
 </div>
@@ -460,11 +461,11 @@ h_t=&amp;(\frac{c}{b_t}-p_t)(p_t(b_t+r(1-\frac{b_t}{k})-b_{t+1}+z_t)-c(\frac{b_t
 <ul>
 <li><strong>Central North</strong></li>
 </ul>
-<p>2006-2013 Interseason biomass, quota, and landings</p>
+<p>2006-2013 Inter-season biomass, quota, and landings</p>
 <ul>
 <li><strong>South Peru</strong></li>
 </ul>
-<p>2009-2013 Interseason quota and landings</p>
+<p>2009-2013 Inter-season biomass, quota and landings</p>
 </div><div class="column">
 <p><img data-src="img/coast-split.png"></p>
 </div>
@@ -474,11 +475,620 @@ h_t=&amp;(\frac{c}{b_t}-p_t)(p_t(b_t+r(1-\frac{b_t}{k})-b_{t+1}+z_t)-c(\frac{b_t
 <h2>Data: IMARPE</h2>
 
 <img data-src="596-shark-tank_files/figure-revealjs/unnamed-chunk-1-1.png" width="960" class="r-stretch"></section>
+<section id="environmental-data" class="slide level2 scrollable">
+<h2>Environmental Data</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">yr_season</th>
+<th style="text-align: left;">zone</th>
+<th style="text-align: left;">type</th>
+<th style="text-align: right;">value</th>
+<th style="text-align: right;">enso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2006-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">2489794.9</td>
+<td style="text-align: right;">-0.6000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2006-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">7613000.0</td>
+<td style="text-align: right;">-0.6000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2006-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">2250000.0</td>
+<td style="text-align: right;">-0.6000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2006-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">1834197.7</td>
+<td style="text-align: right;">0.5257143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2006-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">5979000.0</td>
+<td style="text-align: right;">0.5257143</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2006-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">2000000.0</td>
+<td style="text-align: right;">0.5257143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2007-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">2540567.3</td>
+<td style="text-align: right;">0.0220000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2007-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">7690000.0</td>
+<td style="text-align: right;">0.0220000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2007-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">3000000.0</td>
+<td style="text-align: right;">0.0220000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2007-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">2036904.1</td>
+<td style="text-align: right;">-0.9971429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2007-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">7667000.0</td>
+<td style="text-align: right;">-0.9971429</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2007-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">2300000.0</td>
+<td style="text-align: right;">-0.9971429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2008-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">2665866.0</td>
+<td style="text-align: right;">-1.1900000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2008-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">9840000.0</td>
+<td style="text-align: right;">-1.1900000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2008-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">3000000.0</td>
+<td style="text-align: right;">-1.1900000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2008-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">1769665.5</td>
+<td style="text-align: right;">-0.9542857</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2008-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">4525000.0</td>
+<td style="text-align: right;">-0.9542857</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2008-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">2000000.0</td>
+<td style="text-align: right;">-0.9542857</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2009-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">2842853.8</td>
+<td style="text-align: right;">-0.8680000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2009-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">7248000.0</td>
+<td style="text-align: right;">-0.8680000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2009-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">3500000.0</td>
+<td style="text-align: right;">-0.8680000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2009-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">776320.0</td>
+<td style="text-align: right;">-0.8680000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2009-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">906000.0</td>
+<td style="text-align: right;">-0.8680000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2009-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">500000.0</td>
+<td style="text-align: right;">-0.8680000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2009-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">1286257.7</td>
+<td style="text-align: right;">0.5771429</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2009-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">7248000.0</td>
+<td style="text-align: right;">0.5771429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2009-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">2000000.0</td>
+<td style="text-align: right;">0.5771429</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2010-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">614592.4</td>
+<td style="text-align: right;">0.7820000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2010-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">1918000.0</td>
+<td style="text-align: right;">0.7820000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2010-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">400000.0</td>
+<td style="text-align: right;">0.7820000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2010-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">2096318.6</td>
+<td style="text-align: right;">0.7820000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2010-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">6202000.0</td>
+<td style="text-align: right;">0.7820000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2010-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">2500000.0</td>
+<td style="text-align: right;">0.7820000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2010-2</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">183652.0</td>
+<td style="text-align: right;">-2.0557143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2010-2</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">458000.0</td>
+<td style="text-align: right;">-2.0557143</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2010-2</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">450000.0</td>
+<td style="text-align: right;">-2.0557143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2010-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">392793.2</td>
+<td style="text-align: right;">-2.0557143</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2010-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">4830000.0</td>
+<td style="text-align: right;">-2.0557143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2010-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">2070000.0</td>
+<td style="text-align: right;">-2.0557143</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2011-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">1428176.8</td>
+<td style="text-align: right;">-1.6060000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2011-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">1164000.0</td>
+<td style="text-align: right;">-1.6060000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2011-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">400000.0</td>
+<td style="text-align: right;">-1.6060000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2011-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">2610637.1</td>
+<td style="text-align: right;">-1.6060000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2011-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">9158000.0</td>
+<td style="text-align: right;">-1.6060000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2011-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">3675000.0</td>
+<td style="text-align: right;">-1.6060000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2011-2</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">798402.2</td>
+<td style="text-align: right;">-1.0400000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2011-2</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">145000.0</td>
+<td style="text-align: right;">-1.0400000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2011-2</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">400000.0</td>
+<td style="text-align: right;">-1.0400000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2011-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">2120101.2</td>
+<td style="text-align: right;">-1.0400000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2011-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">6753000.0</td>
+<td style="text-align: right;">-1.0400000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2011-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">2500000.0</td>
+<td style="text-align: right;">-1.0400000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2012-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">774643.9</td>
+<td style="text-align: right;">-0.6060000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2012-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">601000.0</td>
+<td style="text-align: right;">-0.6060000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2012-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">400000.0</td>
+<td style="text-align: right;">-0.6060000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2012-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">2161011.1</td>
+<td style="text-align: right;">-0.6060000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2012-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">8880000.0</td>
+<td style="text-align: right;">-0.6060000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2012-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">2700000.0</td>
+<td style="text-align: right;">-0.6060000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2012-2</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">219557.1</td>
+<td style="text-align: right;">-0.0714286</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2012-2</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">2213000.0</td>
+<td style="text-align: right;">-0.0714286</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2012-2</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">307000.0</td>
+<td style="text-align: right;">-0.0714286</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2012-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">429016.9</td>
+<td style="text-align: right;">-0.0714286</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2012-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">5225000.0</td>
+<td style="text-align: right;">-0.0714286</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2012-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">810000.0</td>
+<td style="text-align: right;">-0.0714286</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2013-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">606418.0</td>
+<td style="text-align: right;">-0.2580000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2013-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">321000.0</td>
+<td style="text-align: right;">-0.2580000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2013-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">400000.0</td>
+<td style="text-align: right;">-0.2580000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2013-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">1617919.6</td>
+<td style="text-align: right;">-0.2580000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2013-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">11948000.0</td>
+<td style="text-align: right;">-0.2580000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2013-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">2050000.0</td>
+<td style="text-align: right;">-0.2580000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2013-2</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">193447.1</td>
+<td style="text-align: right;">-0.4771429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2013-2</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">2101000.0</td>
+<td style="text-align: right;">-0.4771429</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2013-2</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">430000.0</td>
+<td style="text-align: right;">-0.4771429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2013-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">2247511.1</td>
+<td style="text-align: right;">-0.4771429</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2013-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">10047000.0</td>
+<td style="text-align: right;">-0.4771429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2013-2</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">2304000.0</td>
+<td style="text-align: right;">-0.4771429</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2014-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">1215926.6</td>
+<td style="text-align: right;">-0.2600000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2014-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">-0.2600000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2014-1</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">2530000.0</td>
+<td style="text-align: right;">-0.2600000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2014-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">sum_landing</td>
+<td style="text-align: right;">179425.8</td>
+<td style="text-align: right;">-0.2600000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2014-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">biomass</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">-0.2600000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2014-1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">quota</td>
+<td style="text-align: right;">234300.0</td>
+<td style="text-align: right;">-0.2600000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
 <section id="extra-slides" class="slide level2">
 <h2>Extra Slides</h2>
 <p><span class="math display">\[
 h=\frac{\partial U}{\partial b_{t+1}^*}+\delta\mathbb{E}\frac{\partial U_{t+1}}{\partial b_{t+1}^*} \\
 h=\frac{\partial \pi_t}{\partial b_{t+1}^*}\pi(b_t,b_{t+1},z_t)^{-\gamma}+\delta\mathbb{E}[\frac{\partial G}{\partial b_{t+1}}\frac{\partial\pi}{\partial b_{t+1}}\pi(b_{t+1},b_{t+2},z_{t+1})^{-\gamma}]
+\]</span></p>
+</section>
+<section id="solve-first-order-condition-1" class="slide level2 smaller">
+<h2>Solve first order condition</h2>
+<p><span class="math display">\[
+\begin{aligned}
+E_t \left[\left(-(p-\frac{c}{b_t}\right) \left[\left(p-\frac{c}{b_{t}}\right)\left(h_t\right)\right]^{-\gamma} + \delta \left[\left(p-\frac{c}{b_{t+1}}\right)\left( h_{t+1}\right)\right]^{-\gamma}\frac{c}{b_{t+1}^{2}}\left[h_{t+2}\right]\left[\left(p-\frac{c}{b_{t+1}}\right)\left(1-\frac{r}{k}\right)\right]\right]=0
+\end{aligned}
+\]</span></p>
+<p>Replacing harvest definition and assuming <span class="math inline">\(p_{t}\)</span>=<span class="math inline">\(p_{t+1}\)</span></p>
+<p>There are 2 parameters to estimate: <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(c\)</span></p>
+<p>6 variables: <span class="math inline">\(b_t\)</span>, <span class="math inline">\(b_{t+1}\)</span>, <span class="math inline">\(z_t\)</span>, <span class="math inline">\(z_{t+1}\)</span>, <span class="math inline">\(p_t\)</span>, <span class="math inline">\(p_{t+1}\)</span></p>
+<p><span class="math inline">\(r\)</span> and <span class="math inline">\(k\)</span> are known and can either be estimated or fixed from literature</p>
+</section>
+<section id="extra" class="slide level2">
+<h2>Extra:</h2>
+<p><span class="math display">\[
+\begin{aligned}
+h_t=&amp;(\frac{c}{b_t}-p_t)(p_t(b_t+r(1-\frac{b_t}{k})-b_{t+1}+z_t)-c(\frac{b_t+r(1-\frac{b_t}{k})-b_{t+1}+z_t}{b_t}))^{-\gamma}\\
+&amp;+\delta\mathbb{E}[(p_{t+1}(b_{t+1}-\frac{r}{k})+\frac{c(r-b_{t+2}+z_{t+1})}{x_{t+1}^2})\\
+&amp;(p_{t+1}(b_{t+1}+r(1-\frac{b_{t+1}}{k})-b_{t+2}+z_{t+1})-c(\frac{b_{t+1}+r(1-\frac{b_{t+1}}{k})-b_{t+2}+z_{t+1}}{b_{t+1}}))^{-\gamma}]
+\end{aligned}
 \]</span></p>
 <div class="footer footer-default">
 
