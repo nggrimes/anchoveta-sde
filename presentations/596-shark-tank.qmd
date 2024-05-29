@@ -110,8 +110,6 @@ $r$ and $k$ are known and can either be estimated or fixed from literature
 
 $\omega_{it}=\{z_t,z_{t-1},z_{t-2},b_{t+1},b_t,b_{t-1},b_{t-2},p_t,p_{t-1},p_{t-2}\}$
 
-
-
 ## Timing
 
 ::: columns
@@ -209,9 +207,7 @@ full |>
 
 ```
 
-
 ## Extra Slides
-
 
 $$
 h=\frac{\partial U}{\partial b_{t+1}^*}+\delta\mathbb{E}\frac{\partial U_{t+1}}{\partial b_{t+1}^*} \\
